@@ -1,0 +1,214 @@
+--- a/client/core.lua
++++ b/client/core.lua
+@@ -85,6 +85,7 @@
+ MediaManagerInstance.__index = MediaManagerInstance
+ 
+ function MediaManagerInstance:sync(data, temp)
++    self.vcoreUrl = data.url
+     if ((not self.managerReady) or self.syncing) then
+         self.pendingSync = {
+             ['data'] = data,
+@@ -140,7 +141,9 @@
+             Wait(browserWaitMs)
+         end
+ 
+-        self.browserHandle = CreateDui(duiUrl .. '?v=' .. resourceVersion .. '+' .. internalVersion .. (debugDui and '&debug=1' or '') .. '#' .. GetCurrentResourceName() .. '|' .. self.uniqueId, 1280, 720)
++        local state = Entity(self.object).state.vcoreBoombox
++        local generation = type(state)=='table' and state.generation or 0
++        self.browserHandle = CreateDui(duiUrl .. '?v=' .. resourceVersion .. '+' .. internalVersion .. (debugDui and '&debug=1' or '') .. '#' .. GetCurrentResourceName() .. '|' .. self.uniqueId .. '|' .. tostring(generation), 1280, 720)
+ 
+         while ((not self.browserHandle) or (not IsDuiAvailable(self.browserHandle)) or (not nuiReady) or (not self.browserReady) or (not serverReady)) do
+             if (self.destroyed or creationId ~= self.duiCreationId) then
+@@ -335,6 +338,24 @@
+     return instance
+ end
+ 
++local function vcorePlayback(data, state)
++    local instance = type(data)=='table' and instances[data.uniqueId]
++    if not instance or not DoesEntityExist(instance.manager.object) then return false end
++    local tag = Entity(instance.manager.object).state.vcoreBoombox
++    if type(tag)~='table' then return true end
++    if data.generation~=tag.generation or type(data.source)~='string' then return false end
++    local expected = instance.manager.vcoreUrl
++    if type(expected)~='string' then return false end
++    local id = expected:match('[?&]v=([%w_%-]+)')
++    if data.source~=expected and data.source~=id then return false end
++    TriggerEvent('cs-boombox:vcorePlayback',{
++        uniqueId=data.uniqueId,generation=data.generation,source=data.source,
++        state=state,playing=data.playing,time=data.time,duration=data.duration,
++        error=data.error,errorCode=data.errorCode
++    })
++    return true
++end
++
+ RegisterNUICallback('browserReady', function(data, callback)
+     if (instances[data.uniqueId]) then
+         instances[data.uniqueId].manager:onBrowserReady()
+@@ -360,6 +381,7 @@
+ end)
+ 
+ RegisterNUICallback('controllerError', function(data, callback)
++    if not vcorePlayback(data,'error') then callback(true); return end
+     if (instances[data.uniqueId]) then
+         if (uiEnabled) then
+             local message = data.error
+@@ -394,6 +416,7 @@
+ end)
+ 
+ RegisterNUICallback('controllerEnded', function(data, callback)
++    if not vcorePlayback(data,'ended') then callback(true); return end
+     if (instances[data.uniqueId] and instances[data.uniqueId].isUpdater) then
+         TriggerServerEvent('cs-boombox:controllerEnded', data.uniqueId)
+     end
+@@ -410,9 +433,7 @@
+ end)
+ 
+ RegisterNUICallback('controllerPlayingInfo', function(data, callback)
+-    if (not instances[data.uniqueId]) then
+-        return
+-    end
++    if not vcorePlayback(data) then callback(true); return end
+ 
+     instances[data.uniqueId].controllerPlayingInfo.time = data.time
+     instances[data.uniqueId].controllerPlayingInfo.duration = data.duration
+--- a/client/dui/javascript/controllers/youtube.js
++++ b/client/dui/javascript/controllers/youtube.js
+@@ -64,12 +64,19 @@
+                     },
+ 
+                     onError: event => {
++                        if (!this.source) return
++                        const currentUrl = typeof this.player.getVideoUrl === 'function' ? this.player.getVideoUrl() : ''
++                        const currentId = typeof currentUrl === 'string' ? currentUrl.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/) : null
++                        if (currentId && currentId[1] !== this.source) return
+                         if (this.source)
+                             if (event.data === 2)
+                                 this.play()
+                             else {
++                                const failedSource = this.source
+                                 this.set(null)
+-                                this.manager.controllerError(this, `E_YOUTUBE_ERROR`)
++                                this.playing = false
++                                this.manager.controllerError(this, 'E_YOUTUBE_ERROR', event.data, failedSource)
++                                return
+                             }
+ 
+                         const ytVideoId = this.player.getVideoUrl().match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i)
+--- a/client/dui/javascript/script.js
++++ b/client/dui/javascript/script.js
+@@ -2,6 +2,7 @@
+ const hashData = hash ? hash.split('|') : []
+ const resourceName = hashData[0]
+ const uniqueId = hashData[1]
++const vcoreGeneration = Number(hashData[2]) || 0
+ const urlCheckElement = document.createElement('input')
+ const lerp = (a, b, t) => (a * (1 - t)) + (b * t)
+ 
+@@ -107,6 +108,8 @@
+                 method: 'POST',
+                 body: JSON.stringify({
+                     uniqueId: this.uniqueId,
++                    generation: vcoreGeneration,
++                    source: controller.source,
+                     time: controller.time(),
+                     duration: controller.duration,
+                     playing: controller.playing
+@@ -130,13 +133,16 @@
+             }).catch(error => {})
+     }
+ 
+-    controllerError(controller, error) {
++    controllerError(controller, error, errorCode = null, source = controller.source) {
+         if (controller.key === this.controller.key)
+             fetch(`https://${resourceName}/controllerError`, {
+                 method: 'POST',
+                 body: JSON.stringify({
+                     uniqueId: this.uniqueId,
+                     controller: controller.key,
++                    generation: vcoreGeneration,
++                    source,
++                    errorCode,
+                     error
+                 })
+             }).catch(error => {})
+@@ -148,7 +154,9 @@
+                 method: 'POST',
+                 body: JSON.stringify({
+                     uniqueId: this.uniqueId,
+-                    controller: controller.key
++                    controller: controller.key,
++                    generation: vcoreGeneration,
++                    source: controller.source
+                 })
+             }).catch(error => {})
+     }
+--- a/server/core.lua
++++ b/server/core.lua
+@@ -1128,3 +1128,67 @@
+     
+     return queue[uniqueId]
+ end)
++
++local vcoreBridgeOwners = {}
++local function vcoreFinite(value)
++    return type(value) == 'number' and value == value and math.abs(value) ~= math.huge
++end
++local function vcoreOwned(uniqueId)
++    local caller = GetInvokingResource()
++    return caller == (config.vcoreOwner or 'vcore-hud') and vcoreBridgeOwners[uniqueId] == caller and data[uniqueId]
++end
++
++exports('VcoreEnsurePlayer', function(uniqueId, model)
++    local caller = GetInvokingResource()
++    if caller ~= (config.vcoreOwner or 'vcore-hud') or type(uniqueId) ~= 'string' or #uniqueId > 32 or not uniqueId:match('^%d+$')
++        or type(model) ~= 'string' or type(config.models[model]) ~= 'table' or not config.models[model].enabled then return false end
++    if vcoreBridgeOwners[uniqueId] and vcoreBridgeOwners[uniqueId] ~= caller then return false end
++    vcoreBridgeOwners[uniqueId] = caller
++    if not data[uniqueId] then
++        data[uniqueId] = {
++            media = { playing = false, stopped = true, time = 0, volume = 0, loop = false },
++            syncedPlayers = 0,
++            config = config.models[model]
++        }
++    end
++    queue[uniqueId] = queue[uniqueId] or {}
++    return true
++end)
++
++exports('VcoreSetVolume', function(uniqueId, volume)
++    local player = vcoreOwned(uniqueId)
++    if not player or not vcoreFinite(volume) then return false end
++    local maximum = tonumber(player.config.maxVolumePercent) or 100
++    player.media.volume = math.max(0, math.min(1, maximum / 100, volume))
++    SyncData(uniqueId)
++    return player.media.volume
++end)
++
++exports('VcoreSeek', function(uniqueId, time)
++    local player = vcoreOwned(uniqueId)
++    if not player or not player.media.url or not vcoreFinite(time) or time < 0 or time > 21600 then return false end
++    if vcoreFinite(player.media.duration) and player.media.duration > 0 then time = math.min(time, math.max(0, player.media.duration - 0.5)) end
++    player.media.time = time
++    SyncData(uniqueId, nil, { media = { seek = true } })
++    return time
++end)
++
++exports('VcoreDestroyPlayer', function(uniqueId)
++    local player = vcoreOwned(uniqueId)
++    if not player then return false end
++    player.media.playing = false
++    player.media.stopped = true
++    player.media.time = 0
++    queue[uniqueId] = {}
++    syncableObjects[uniqueId] = nil
++    SyncQueue(uniqueId)
++    SyncData(uniqueId, nil, { force = true })
++    for playerId, identifiers in pairs(players) do
++        for index = #identifiers, 1, -1 do
++            if identifiers[index] == uniqueId then table.remove(identifiers, index) end
++        end
++        if controllers[playerId] == uniqueId then controllers[playerId] = nil end
++    end
++    data[uniqueId], queue[uniqueId], vcoreBridgeOwners[uniqueId] = nil, nil, nil
++    return true
++end)
