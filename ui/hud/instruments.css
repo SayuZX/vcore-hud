@@ -1,0 +1,484 @@
+#open-speed-arc {
+  display: none;
+}
+html[data-speed-background="off"] #new-speed .instrument {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+html[data-speed-background="off"] #new-speed .speed-top > b {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+html[data-speed-background="off"] #vehicle-widget .dial-art > circle {
+  fill: transparent;
+}
+html[data-speed-background="off"] #vehicle-widget .indicator {
+  background: transparent;
+  border-color: transparent;
+}
+html[data-instrument-family="open"] #new-speed {
+  --instrument-muted: color-mix(in srgb, var(--text) 52%, transparent);
+  --instrument-track: color-mix(in srgb, var(--text) 17%, transparent);
+  color: var(--text);
+  font-family: Poppins, Arial, sans-serif;
+}
+html[data-instrument-family="open"] #new-speed .instrument {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+}
+html[data-instrument-family="open"][data-speed-background="on"] #new-speed .instrument {
+  background: var(--glass);
+  box-shadow: 0 0 0 1px var(--glass-border), 0 5px 24px #0002;
+}
+html[data-instrument-family="open"] #new-speed :is(.tachometer, .foundation-speed-arcs, .nitro-track, .aerial-values, .drift-readout) {
+  display: none;
+}
+html[data-instrument-family="open"] #new-speed .new-speed-value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+}
+html[data-instrument-family="open"] #new-speed .new-speed-value strong {
+  color: var(--text);
+  font: 600 54px/1 Poppins, sans-serif;
+  letter-spacing: -2.5px;
+  font-variant-numeric: tabular-nums;
+}
+html[data-instrument-family="open"] #new-speed .new-speed-value > span {
+  color: var(--instrument-muted);
+  font: 500 9px/1.4 Poppins, sans-serif;
+  letter-spacing: 2px;
+  margin: 6px 0 0;
+}
+html[data-instrument-family="open"] #new-speed .speed-top {
+  color: var(--instrument-muted);
+  font: 500 8px/1.2 Poppins, sans-serif;
+  letter-spacing: 1px;
+}
+html[data-instrument-family="open"] #new-speed .speed-top > b {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  width: 26px;
+  height: 26px;
+  color: var(--accent);
+  font: 600 19px/1 Poppins, sans-serif;
+  letter-spacing: 0;
+}
+html[data-instrument-family="open"] #new-speed .fuel-mini {
+  color: var(--instrument-muted);
+  height: 12px;
+}
+html[data-instrument-family="open"] #new-speed .fuel-mini > div {
+  height: 2px;
+  background: var(--instrument-track);
+  border-radius: 0;
+}
+html[data-instrument-family="open"] #new-speed .fuel-mini i {
+  background: var(--text);
+}
+html[data-instrument-family="open"] #new-speed .fuel-mini b {
+  font: 500 8px/1 Poppins, sans-serif;
+}
+html[data-instrument-family="open"] #new-speed .vehicle-state-row {
+  height: 14px;
+  color: var(--instrument-muted);
+}
+html[data-instrument-family="open"] #new-speed .vehicle-state-row > span {
+  min-width: 13px;
+  text-align: center;
+}
+html[data-instrument-family="open"] #new-speed .vehicle-state-row .active {
+  color: var(--accent);
+}
+html[data-instrument-family="open"] #new-speed .vehicle-state-row .warning {
+  color: #ed6a8b;
+}
+html[data-instrument-family="open"] #new-speed .vehicle-state-row .highbeam {
+  color: #67aafa;
+}
+html[data-instrument-family="open"] #new-speed .rpm-strip {
+  position: absolute;
+  display: flex;
+  gap: 3px;
+  margin: 0;
+}
+html[data-instrument-family="open"] #new-speed .rpm-strip > i {
+  flex: 1;
+  width: auto;
+  height: 100%;
+  background: var(--instrument-track);
+  border-radius: 1px;
+  transform: none;
+}
+html[data-instrument-family="open"] #new-speed .rpm-strip > i.lit {
+  background: var(--accent);
+  box-shadow: none;
+}
+html[data-instrument-family="open"] #new-speed .rpm-strip > i.lit:nth-last-child(-n+3) {
+  background: #ef7c74;
+}
+html[data-speed-style="arc"] #new-speed {
+  width: 240px;
+  height: 188px;
+}
+html[data-speed-style="arc"] #open-speed-arc {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 150px;
+  overflow: visible;
+}
+#open-speed-arc :is(.open-arc-track, #open-rpm-arc) {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+#open-speed-arc .open-arc-track {
+  stroke: var(--instrument-track);
+}
+#open-rpm-arc {
+  stroke: var(--accent);
+  transition: stroke-dasharray .12s linear;
+}
+#open-speed-arc.redline #open-rpm-arc {
+  stroke: #ef7c74;
+}
+#open-speed-arc .open-arc-tick {
+  stroke: var(--instrument-track);
+  stroke-width: 1;
+}
+#open-speed-arc .open-arc-tick.major {
+  stroke: var(--instrument-muted);
+}
+#open-speed-arc text {
+  fill: var(--instrument-muted);
+  font: 500 7px Poppins, sans-serif;
+  letter-spacing: 2px;
+  text-anchor: middle;
+}
+html[data-speed-style="arc"] #new-speed .new-speed-value {
+  top: 52px;
+  left: 36px;
+  right: 36px;
+}
+html[data-speed-style="arc"] #new-speed .speed-top {
+  top: 126px;
+  left: 24px;
+  right: 24px;
+}
+html[data-speed-style="arc"] #new-speed .fuel-mini {
+  top: 157px;
+  left: 32px;
+  right: 32px;
+}
+html[data-speed-style="arc"] #new-speed .vehicle-state-row {
+  top: 174px;
+  left: 45px;
+  right: 45px;
+}
+html[data-speed-style="arc"] #new-speed .rpm-strip {
+  display: none;
+}
+html[data-speed-style="split"] #new-speed {
+  width: 280px;
+  height: 158px;
+}
+html[data-speed-style="split"] #new-speed .new-speed-value {
+  top: 23px;
+  left: 6px;
+  right: auto;
+  width: 176px;
+  align-items: flex-start;
+}
+html[data-speed-style="split"] #new-speed .new-speed-value strong {
+  font-size: 70px;
+  letter-spacing: -4px;
+}
+html[data-speed-style="split"] #new-speed .new-speed-value > span {
+  margin-left: 4px;
+}
+html[data-speed-style="split"] #new-speed .speed-top {
+  top: 6px;
+  left: 10px;
+  right: 6px;
+  align-items: flex-start;
+}
+html[data-speed-style="split"] #new-speed .speed-top > b {
+  position: absolute;
+  right: 0;
+  top: 26px;
+  width: 34px;
+  height: 38px;
+  font-size: 31px;
+}
+html[data-speed-style="split"] #new-speed .speed-top > #drive-mode {
+  font-size: 7px;
+  letter-spacing: .8px;
+}
+html[data-speed-style="split"] #new-speed .rpm-strip {
+  top: 30px;
+  left: 200px;
+  right: auto;
+  width: 22px;
+  height: 87px;
+  flex-direction: column-reverse;
+  gap: 2px;
+}
+html[data-speed-style="split"] #new-speed .rpm-strip > i {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+html[data-speed-style="split"] #new-speed .fuel-mini {
+  top: 125px;
+  left: 10px;
+  right: 10px;
+}
+html[data-speed-style="split"] #new-speed .vehicle-state-row {
+  top: 144px;
+  left: 10px;
+  right: 104px;
+}
+html[data-speed-style="ribbon"] #new-speed {
+  width: 340px;
+  height: 112px;
+}
+html[data-speed-style="ribbon"] #new-speed .rpm-strip {
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 10px;
+  gap: 4px;
+}
+html[data-speed-style="ribbon"] #new-speed .rpm-strip > i {
+  border-radius: 0;
+  transform: skewX(-20deg);
+}
+html[data-speed-style="ribbon"] #new-speed .new-speed-value {
+  top: 27px;
+  left: 9px;
+  right: auto;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 12px;
+}
+html[data-speed-style="ribbon"] #new-speed .new-speed-value strong {
+  font: italic 600 49px/1 Poppins, sans-serif;
+  letter-spacing: -2px;
+}
+html[data-speed-style="ribbon"] #new-speed .new-speed-value > span {
+  margin: 0;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+html[data-speed-style="ribbon"] #new-speed .speed-top {
+  top: 25px;
+  left: auto;
+  right: 10px;
+  width: 118px;
+}
+html[data-speed-style="ribbon"] #new-speed .speed-top > b {
+  order: 3;
+  font-size: 31px;
+  height: 42px;
+  width: 30px;
+}
+html[data-speed-style="ribbon"] #new-speed #drive-mode {
+  display: none;
+}
+html[data-speed-style="ribbon"] #new-speed .vehicle-state-row {
+  top: 84px;
+  left: 204px;
+  right: 10px;
+}
+html[data-speed-style="ribbon"] #new-speed .fuel-mini {
+  top: 85px;
+  left: 10px;
+  right: 157px;
+}
+html[data-speed-style="numeric"] #new-speed {
+  width: 204px;
+  height: 174px;
+}
+html[data-speed-style="numeric"] #new-speed .new-speed-value {
+  top: 29px;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 9px;
+}
+html[data-speed-style="numeric"] #new-speed .new-speed-value strong {
+  font-size: 74px;
+  font-weight: 500;
+  letter-spacing: -4px;
+}
+html[data-speed-style="numeric"] #new-speed .new-speed-value > span {
+  font-size: 8px;
+  letter-spacing: .5px;
+}
+html[data-speed-style="numeric"] #new-speed .speed-top {
+  top: 1px;
+  left: 4px;
+  right: 4px;
+}
+html[data-speed-style="numeric"] #new-speed .speed-top > b {
+  width: 22px;
+  height: 22px;
+  font-size: 16px;
+}
+html[data-speed-style="numeric"] #new-speed #drive-mode {
+  display: none;
+}
+html[data-speed-style="numeric"] #new-speed .rpm-strip {
+  top: 118px;
+  left: 4px;
+  right: 4px;
+  height: 3px;
+  gap: 2px;
+}
+html[data-speed-style="numeric"] #new-speed .fuel-mini {
+  top: 135px;
+  left: 4px;
+  right: 4px;
+}
+html[data-speed-style="numeric"] #new-speed .vehicle-state-row {
+  top: 157px;
+  left: 4px;
+  right: 4px;
+}
+html[data-speed-style="outline"] #new-speed {
+  width: 210px;
+  height: 284px;
+}
+html[data-speed-style="outline"] #new-speed #analog-scale {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 210px;
+  height: 210px;
+  overflow: visible;
+}
+html[data-speed-style="outline"] #new-speed .speed-top {
+  top: 179px;
+  left: 0;
+  right: 0;
+  justify-content: center;
+}
+html[data-speed-style="outline"] #new-speed .speed-top > span {
+  display: none;
+}
+html[data-speed-style="outline"] #new-speed .speed-top > b {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+html[data-speed-style="outline"] #new-speed .new-speed-value {
+  top: 213px;
+  left: 12px;
+  right: 12px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  gap: 9px;
+}
+html[data-speed-style="outline"] #new-speed .new-speed-value strong {
+  font-size: 29px;
+  letter-spacing: -1px;
+}
+html[data-speed-style="outline"] #new-speed .new-speed-value > span {
+  margin: 0;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+html[data-speed-style="outline"] #new-speed .fuel-mini {
+  top: 249px;
+  left: 12px;
+  right: 12px;
+}
+html[data-speed-style="outline"] #new-speed .vehicle-state-row {
+  top: 270px;
+  left: 24px;
+  right: 24px;
+}
+html[data-speed-style="outline"] #new-speed .rpm-strip {
+  display: none;
+}
+html[data-speed-style="rail"] #new-speed {
+  width: 230px;
+  height: 190px;
+}
+html[data-speed-style="rail"] #new-speed .rpm-strip {
+  top: 4px;
+  left: 3px;
+  right: auto;
+  width: 15px;
+  height: 158px;
+  flex-direction: column-reverse;
+  gap: 3px;
+}
+html[data-speed-style="rail"] #new-speed .rpm-strip > i {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  border-radius: 0;
+  transform: skewY(-14deg);
+}
+html[data-speed-style="rail"] #new-speed .new-speed-value {
+  top: 44px;
+  left: 41px;
+  right: 4px;
+  align-items: flex-end;
+}
+html[data-speed-style="rail"] #new-speed .new-speed-value strong {
+  font-size: 69px;
+  font-weight: 500;
+  letter-spacing: -3px;
+}
+html[data-speed-style="rail"] #new-speed .new-speed-value > span {
+  margin: 7px 1px 0 0;
+  font-size: 9px;
+}
+html[data-speed-style="rail"] #new-speed .speed-top {
+  top: 7px;
+  left: 43px;
+  right: 4px;
+}
+html[data-speed-style="rail"] #new-speed .speed-top > b {
+  order: 3;
+  font-size: 21px;
+}
+html[data-speed-style="rail"] #new-speed #drive-mode {
+  display: none;
+}
+html[data-speed-style="rail"] #new-speed .fuel-mini {
+  top: 150px;
+  left: 43px;
+  right: 4px;
+}
+html[data-speed-style="rail"] #new-speed .vehicle-state-row {
+  top: 176px;
+  left: 43px;
+  right: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #open-rpm-arc {
+    transition: none;
+  }
+}

@@ -1,0 +1,101 @@
+#identity-widget {
+  height: 108px;
+}
+#hud > .standalone-money {
+  position: absolute;
+  width: 236px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 0 15px 0 10px;
+  border: 0;
+  border-radius: 26px;
+  box-shadow: inset 0 1px 1px #ffffff08;
+  color: #fff;
+  font: 400 14px/20px Poppins, Arial, sans-serif;
+  text-shadow: 0 1px 3px #08101828;
+}
+#hud > .standalone-money.cash {
+  background: linear-gradient(105deg, #4b936a66, #284d3647);
+}
+#hud > .standalone-money.bank {
+  background: linear-gradient(105deg, #597c9e73, #24354b63);
+}
+#hud > .standalone-money > span {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+#hud > .standalone-money > span svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+#hud > .standalone-money.cash > span {
+  color: #b5ffbd;
+  filter: drop-shadow(0 0 5px #98ffac70);
+}
+#hud > .standalone-money.bank > span {
+  color: #c4edff;
+  filter: drop-shadow(0 0 5px #82ceff70);
+}
+#hud > .standalone-money small {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #ffffffa3;
+}
+#hud > .standalone-money b {
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: -.35px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.soft-glass #hud > .standalone-money {
+  backdrop-filter: blur(12px);
+}
+html[data-cash-shape="rounded"] #cash-widget, html[data-bank-shape="rounded"] #bank-widget {
+  border-radius: 13px;
+}
+html[data-cash-shape="square"] #cash-widget, html[data-bank-shape="square"] #bank-widget {
+  border-radius: 3px;
+}
+html[data-theme="light"] #hud > .standalone-money {
+  color: #243140;
+}
+html[data-theme="light"] #hud > .standalone-money small {
+  color: #435c63;
+}
+html[data-theme="light"] #hud > .standalone-money.cash {
+  background: linear-gradient(105deg, #91cdaaaf, #d4e7d6c9);
+}
+html[data-theme="light"] #hud > .standalone-money.bank {
+  background: linear-gradient(105deg, #a1c9e8af, #d9e9f4c9);
+}
+#hud > .standalone-location, #hud > .standalone-compass {
+  position: absolute;
+  font-family: Poppins, Arial, sans-serif;
+}
+#hud > .standalone-location {
+  right: auto;
+  bottom: auto;
+  text-shadow: 0 1px 3px #0003;
+}
+#hud > .standalone-compass {
+  right: auto;
+  bottom: auto;
+  color: var(--text);
+}
+html[data-layout="circle"][data-theme="light"] #hud > .standalone-location {
+  color: var(--text);
+}

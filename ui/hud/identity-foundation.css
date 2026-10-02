@@ -1,0 +1,359 @@
+#identity-widget {
+  width: 236px;
+  display: grid;
+  gap: 12px;
+  color: #fff;
+  font-family: Poppins, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-shadow: 0 1px 3px #08101828;
+}
+#identity-widget .identity-top {
+  display: grid;
+  grid-template-columns: 48px 176px;
+  gap: 12px;
+  width: 236px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+#identity-widget .foundation-server-mark {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: #d1ef74;
+  border-radius: 50%;
+  background: #263d3555;
+  filter: drop-shadow(0 0 4px #d2ef5940);
+}
+#identity-widget .foundation-server-mark > svg {
+  position: absolute;
+  inset: 0;
+  width: 48px;
+  height: 48px;
+}
+#identity-widget .foundation-server-mark > span {
+  display: block;
+  width: 23px;
+  height: 23px;
+}
+#identity-widget .foundation-server-mark > span svg {
+  width: 23px;
+  height: 23px;
+}
+#identity-widget .foundation-brand-pill,
+#identity-widget .name-chip,
+#identity-widget .date-chip {
+  border: 0;
+  background: rgba(16, 25, 35, .43);
+  box-shadow: inset 0 1px 1px #ffffff08;
+}
+.soft-glass #identity-widget .foundation-brand-pill,
+.soft-glass #identity-widget .name-chip,
+.soft-glass #identity-widget .date-chip,
+.soft-glass #identity-widget .money,
+.soft-glass #shortcut-widget > button:not(.move-handle) {
+  backdrop-filter: blur(12px);
+}
+#identity-widget .foundation-brand-pill {
+  width: 176px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 4px;
+  border-radius: 26px;
+}
+#identity-widget .foundation-brand-copy {
+  min-width: 0;
+  text-align: right;
+}
+#identity-widget .foundation-brand-copy b {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: .25px;
+}
+#identity-widget .foundation-brand-copy small {
+  display: block;
+  margin-top: 0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: .55px;
+  color: #ffffff80;
+}
+#identity-widget .foundation-brand-mark {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #ffffff0b;
+  background: #10151bd9;
+  box-shadow: 0 0 0 2px #00000015;
+}
+#identity-widget .foundation-brand-mark svg {
+  width: 23px;
+  height: 23px;
+}
+#identity-widget .identity-person {
+  display: grid;
+  grid-template-columns: 48px 176px;
+  gap: 12px;
+  height: 48px;
+  margin: 0;
+}
+#identity-widget .date-chip {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 13px;
+  font-weight: 400;
+  white-space: normal;
+  overflow: hidden;
+  padding: 4px;
+}
+#identity-widget .date-chip.foundation-date-formatted {
+  font-size: 0;
+  line-height: 0;
+}
+#identity-widget .date-chip.foundation-date-formatted::before {
+  content: attr(data-weekday);
+  display: block;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 400;
+  color: #ffffffba;
+}
+#identity-widget .date-chip.foundation-date-formatted::after {
+  content: attr(data-day);
+  display: block;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+  color: #fff;
+}
+#identity-widget .name-chip {
+  width: 176px;
+  height: 48px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 11px 4px 4px;
+  min-width: 0;
+}
+#identity-widget .id-chip {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #10151b9c;
+  box-shadow: 0 0 6px #00000012;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 500;
+}
+#identity-widget .name-chip > span:last-child {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+#identity-widget .name-chip b {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 500;
+}
+#identity-widget .name-chip small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 0;
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 400;
+  color: #ffffff86;
+}
+#identity-widget #money-cards {
+  display: grid;
+  gap: 12px;
+}
+#identity-widget .money {
+  width: 236px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 0 15px 0 10px;
+  border: 0;
+  border-radius: 26px;
+  box-shadow: inset 0 1px 1px #ffffff08;
+  font-size: 14px;
+  color: #fff;
+}
+#identity-widget .cash {
+  background: linear-gradient(105deg, #4b936a66, #284d3647);
+}
+#identity-widget .bank {
+  background: linear-gradient(105deg, #597c9e73, #24354b63);
+}
+#identity-widget .money > span {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+#identity-widget .money > span svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+#identity-widget .cash > span {
+  color: #b5ffbd;
+  filter: drop-shadow(0 0 5px #98ffac70);
+}
+#identity-widget .bank > span {
+  color: #c4edff;
+  filter: drop-shadow(0 0 5px #82ceff70);
+}
+#identity-widget .money small {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #ffffffa3;
+}
+#identity-widget .money b {
+  margin-left: auto;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: -.35px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#shortcut-widget {
+  width: 48px;
+  height: 264px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: #fff;
+  font-family: Poppins, Arial, sans-serif;
+}
+#shortcut-widget > button:not(.move-handle) {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(21, 19, 18, .48);
+  box-shadow: inset 0 1px 1px #ffffff08;
+  color: #fff;
+  cursor: pointer;
+}
+#shortcut-widget > button:not(.move-handle) > svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 2px #0003);
+}
+#shortcut-widget > button:not(.move-handle) > small {
+  position: absolute;
+  right: -3px;
+  bottom: -2px;
+  min-width: 18px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  padding: 0 2px;
+  border: 1px solid #a9d4ed24;
+  border-radius: 3px;
+  background: #284358c9;
+  color: #fff;
+  font: 500 10px/15px Poppins, Arial, sans-serif;
+  letter-spacing: -.2px;
+}
+#shortcut-widget > button:not(.move-handle):hover {
+  background: #304656a6;
+}
+#shortcut-widget > button:not(.move-handle):focus-visible {
+  outline: 2px solid #c4eaff;
+  outline-offset: 4px;
+}
+#identity-widget[hidden], #identity-widget #money-cards[hidden], #shortcut-widget[hidden] {
+  display: none;
+}
+#identity-widget .money b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+}
+#identity-widget .id-chip {
+  overflow: hidden;
+  font-size: var(--id-font-size,16px);
+}
+html[data-theme=light] #identity-widget {
+  color: #243140;
+}
+html[data-theme=light] #identity-widget .foundation-brand-pill,
+html[data-theme=light] #identity-widget .name-chip,
+html[data-theme=light] #identity-widget .date-chip {
+  background: #e3eef4c9;
+}
+html[data-theme=light] #identity-widget .id-chip {
+  background: #cad9e5c9;
+}
+html[data-theme=light] #identity-widget .foundation-brand-copy small,
+html[data-theme=light] #identity-widget .name-chip small,
+html[data-theme=light] #identity-widget .date-chip.foundation-date-formatted::before {
+  color: #526774;
+}
+html[data-theme=light] #identity-widget .date-chip.foundation-date-formatted::after {
+  color: #243140;
+}
+html[data-theme=light] #identity-widget .money {
+  color: #243140;
+}
+html[data-theme=light] #identity-widget .money small {
+  color: #435c63;
+}
+html[data-theme=light] #identity-widget .cash {
+  background: linear-gradient(105deg,#91cdaaaf,#d4e7d6c9);
+}
+html[data-theme=light] #identity-widget .bank {
+  background: linear-gradient(105deg,#a1c9e8af,#d9e9f4c9);
+}
+html[data-theme=light] #shortcut-widget>button:not(.move-handle) {
+  background: #e3eef4b0;
+  color: #243140;
+}
+html[data-theme=light] #identity-widget .foundation-brand-mark {
+  color: #fff;
+}

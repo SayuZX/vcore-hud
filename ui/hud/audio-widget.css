@@ -1,0 +1,223 @@
+#hud > .audio-widget {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 62px;
+  margin: 0;
+  padding: 6px 9px 6px 6px;
+  border: 1px solid #dce9ef24;
+  border-radius: 34px;
+  background: linear-gradient(120deg, #28323aeb, #1e262ecc);
+  box-shadow: inset 0 1px 0 #ffffff12, 0 5px 18px #0002;
+  color: #f1f5f7;
+  font-family: Poppins, Arial, sans-serif;
+  text-align: left;
+  text-shadow: none;
+  pointer-events: auto;
+}
+
+#hud > .audio-widget[hidden], #music-panel[hidden] {
+  display: none;
+}
+
+#hud > .audio-widget button {
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+#hud > .audio-widget .audio-widget-open {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 26px;
+  background: transparent;
+  text-align: left;
+}
+
+#hud > .audio-widget .music-disc, #music-panel .audio-player-disc {
+  display: block;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #dce9ef30;
+  border-radius: 50%;
+  background: radial-gradient(circle, #273139 0 7%, #d3ba9b 8% 12%, #806952 13% 18%, transparent 19%), repeating-radial-gradient(circle, transparent 0 3px, #ffffff0b 4px 5px), conic-gradient(from 25deg, #1e252b, #616b70, #252d33, #746963, #1e252b);
+  box-shadow: inset 0 0 0 3px #ffffff0a;
+}
+
+#hud > .audio-widget .audio-widget-copy {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#hud > .audio-widget b, #hud > .audio-widget small {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#hud > .audio-widget b {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+#hud > .audio-widget small {
+  margin-top: 1px;
+  color: #bcc8cf;
+  font-size: 10px;
+  line-height: 16px;
+}
+
+#hud > .audio-widget .audio-widget-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+#hud > .audio-widget .audio-widget-controls button {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+#hud > .audio-widget .audio-widget-controls button[data-audio-action="toggle"] {
+  width: 34px;
+  height: 34px;
+  background: #e7f1f21a;
+}
+
+#hud > .audio-widget .audio-widget-controls svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+#hud > .audio-widget #music-mini-play {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  font: 18px/1 Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+#hud > .audio-widget button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+#hud > .audio-widget button:focus-visible, #music-panel :is(button, input, select, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+#hud > .audio-widget button:not(:disabled):hover {
+  background-color: #ffffff0d;
+}
+
+#hud > .audio-widget[data-playback="error"] #music-mini-status {
+  color: #ffafba;
+}
+
+#hud > .audio-widget.audio-is-playing .music-disc {
+  animation: audio-disc-turn 12s linear infinite;
+}
+
+#music-panel.minimap-audio-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: auto;
+  border: 1px solid #dce9ef2b;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #253039fa, #111921fa);
+  color: #f0f5f7;
+  font: 10px/1.35 Poppins, sans-serif;
+  text-shadow: none;
+  pointer-events: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a4cfc438 transparent;
+}
+#music-panel.minimap-audio-panel[hidden] { display: none !important; }
+.radar-bezel.audio-dock-open > :not(#music-panel) { visibility: hidden !important; }
+html.minimap-audio-open .radar-bezel.widget-hidden #music-panel,
+html.minimap-audio-open .radar-bezel.widget-hidden #music-panel * {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+#music-panel > header { display: flex; align-items: center; gap: 8px; flex: 0 0 23px; }
+#music-panel > header h2 { margin: 0; font-size: 12px; font-weight: 600; }
+#music-panel > header > div { margin-right: auto; }
+#music-panel button {
+  padding: 4px 7px;
+  border: 1px solid #dce9ef26;
+  border-radius: 5px;
+  background: #ffffff0b;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+#music-panel button:disabled { opacity: .35; cursor: default; }
+#music-panel button:hover:not(:disabled) { background: #ffffff19; }
+#music-panel > header button { height: 22px; padding: 2px 7px; font-size: 9px; }
+#music-panel #music-close { width: 23px; font-size: 16px; line-height: 1; padding: 0; }
+#music-panel > [data-page=music] { display: flex; flex-direction: column; gap: 6px; min-height: 0; padding: 0; }
+#music-panel .music-now { display: flex; gap: 8px; align-items: center; min-height: 29px; margin: 0; padding: 0; background: none; }
+#music-panel .music-now > div { min-width: 0; }
+#music-panel .audio-player-disc { flex: 0 0 27px; width: 27px; height: 27px; }
+#music-panel #music-title { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 10px; font-weight: 500; }
+#music-panel #music-status { display: block; max-width: 100%; color: #b5c9cd; font-size: 8px; line-height: 1.4; margin: 2px 0 0; }
+#music-panel #music-form { display: grid; grid-template-columns: minmax(0, 1fr) auto 26px; gap: 5px; }
+#music-panel #music-form .audio-url-field { display: block; min-width: 0; font-size: 0; }
+#music-panel #music-form input { display: block; width: 100%; min-width: 0; margin: 0; }
+#music-panel input:not([type=range]) { height: 27px; padding: 4px 7px; border: 1px solid #dce9ef26; border-radius: 5px; background: #0003; color: #f0f5f7; font: 9px Poppins, sans-serif; }
+#music-panel .accent-button { background: #afd8c8; border-color: transparent; color: #15362d; }
+#music-panel #queue-track { padding: 0; font-size: 18px; }
+#music-panel .music-actions { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; }
+#music-panel .music-actions button { font-size: 10px !important; padding: 4px 6px; }
+#music-panel .music-actions button.selected { color: #b8efcf; border-color: #b8efcf80; }
+#music-panel #audio-unmute { flex-basis: 100%; }
+#music-panel .volume-setting { margin: 0; display: flex; flex-direction: row; align-items: center; gap: 8px; font-size: 8px; color: #b5c9cd; }
+#music-panel .volume-setting > span { display: flex; gap: 7px; white-space: nowrap; }
+#music-panel #music-volume { flex: 1; min-width: 0; height: 14px; margin: 0; accent-color: #afd8c8; }
+#music-panel .music-keyboard-hints { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: auto; padding-top: 5px; border-top: 1px solid #ffffff12; color: #9cb4bb; font-size: 7px; }
+#music-panel kbd { font: inherit; color: #d1e2e4; }
+#music-panel #music-playlist { display: flex; flex-direction: column; gap: 4px; overflow: auto; max-height: 135px; }
+#music-panel #music-playlist:empty::after { content: 'Antrean kosong. Tambahkan lagu dengan tombol +.'; padding: 12px 0; color: #9cb4bb; font-size: 9px; }
+#music-panel #music-playlist button { text-align: left; }
+#music-panel.show-audio-queue :is(.music-now,#music-form,.music-actions,.volume-setting) { display: none; }
+#music-panel [hidden] { display: none !important; }
+html[data-layout=circle] #music-panel { border-radius: 15px; }
+@keyframes audio-disc-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { #hud > .audio-widget .music-disc { animation: none !important; } }
