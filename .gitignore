@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+*.zip
+.env
+.env.*
+/.vscode/
