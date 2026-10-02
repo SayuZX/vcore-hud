@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111111"><title>VCORE • FiveM HUD</title>
+  <link rel="icon" href="data:,">
+  <script>document.documentElement.classList.add(typeof GetParentResourceName === 'function' ? 'fivem' : 'preview');</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="foundation.css">
+  <link rel="stylesheet" href="identity-foundation.css">
+  <link rel="stylesheet" href="component-shapes.css">
+  <link rel="stylesheet" href="settings-glass.css">
+  <link rel="stylesheet" href="instruments.css">
+  <link rel="stylesheet" href="standalone-widgets.css">
+  <link rel="stylesheet" href="element-editor.css">
+  <link rel="stylesheet" href="widget-controls.css">
+  <link rel="stylesheet" href="audio-widget.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
+<symbol id="heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21S2 15.3 2 8.8C2 3.2 9.4 1.8 12 6c2.6-4.2 10-2.8 10 2.8C22 15.3 12 21 12 21Z"/><path d="M4 11h4l2-3 3 7 2-4h5" stroke="var(--icon-cutout,#fff)" fill="none" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 3 5v6c0 5.3 4.8 9.1 9 11 4.2-1.9 9-5.7 9-11V5l-9-3Z"/></symbol>
+<symbol id="burger" viewBox="0 0 24 24"><path fill="currentColor" d="M3 10a9 9 0 0 1 18 0H3Zm-1 2h20v3H2v-3Zm1 5h18c0 3-2 4-4 4H7c-2 0-4-1-4-4Z"/><path d="m4 15 4 2 5-2 5 2 3-2" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+<symbol id="drink" viewBox="0 0 24 24"><path fill="currentColor" d="m6 7 1.7 15h8.6L18 7H6ZM5 4h14v2H5V4Z"/><path d="M12 4V1h4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+<symbol id="brain" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4C7 1 4 4 5 7c-4 0-4 6-1 7-2 3 1 6 4 5 0 3 4 3 4 0V5c0-2-2-3-2-1ZM14 4c3-3 6 0 5 3 4 0 4 6 1 7 2 3-1 6-4 5 0 3-4 3-4 0"/><path d="m6 7 2 2-1 3m-3 2 3-1 2 2m9-8-2 2 1 3m3 2-3-1-2 2"/></g></symbol>
+<symbol id="voice" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-3 0h6"/></g></symbol>
+<symbol id="fuel" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 21V3h10v18M1 21h14M5 5h6v6H5zM13 9h2c2 0 1 7 4 7 3 0 1-10 1-10l-3-3m2 2-2 2 2 3h2"/></g></symbol>
+<symbol id="lights" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 6c10 0 10 12 0 12V6Zm-3 1L3 5m6 6-6-1m6 5-6 1m6 3-6 3"/></g></symbol>
+<symbol id="seatbelt" viewBox="0 0 24 24"><circle fill="currentColor" cx="12" cy="4" r="2.5"/><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m8 10 3-2 4 2 1 6m-5-6-2 6-2 5m6-7 3 7M5 7l13 12"/></g></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4M12 14v3"/></g></symbol>
+<symbol id="oxygen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8c0-3 2-5 4-5v8H5v-3Zm10-5c2 0 4 2 4 5v3h-4V3ZM5 11v6a3 3 0 0 0 6 0V7m8 4v6a3 3 0 0 1-6 0V7"/></g></symbol>
+</defs></svg>
+
+  <main id="hud" aria-label="Player heads-up display">
+    <section class="radar-widget" aria-label="Location and compass">
+      <div class="heading" id="heading">120°</div>
+      <div class="radar-bezel">
+        <svg class="preview-map" viewBox="0 0 184 184" aria-hidden="true">
+          <defs><clipPath id="map-clip"><rect width="184" height="184"/></clipPath><radialGradient id="map-bg"><stop stop-color="#d6dce4"/><stop offset="1" stop-color="#c3cdd9"/></radialGradient></defs>
+          <g clip-path="url(#map-clip)"><rect width="184" height="184" fill="url(#map-bg)"/>
+            <g id="map-roads"><path d="M9 91C49 86 82 72 109 54S158 23 190 28" stroke="#71acf4" stroke-width="11" fill="none" stroke-linecap="round"/>
+              <path d="M23 171c21-25 58-39 67-69S86 41 84-9" stroke="#ccd6e2" stroke-width="8" fill="none"/>
+              <path d="M90 10c4 51 12 77 32 110s27 37 43 53" stroke="#9aaabe" stroke-width="9" fill="none"/>
+              <circle cx="78" cy="68" r="4.5" fill="#24c396"/><path d="M125 88h8v6h-8z" fill="#f15a68"/>
+            </g>
+          </g>
+        </svg>
+        <svg class="compass-face" viewBox="0 0 184 184" aria-hidden="true"><g id="compass-ticks"></g><g id="compass-cardinals"></g></svg>
+        <span class="player-marker" aria-hidden="true"></span>
+      </div>
+      <div class="location"><div id="zone">LA PUERTA</div><div id="street">ALTA ST</div></div>
+    </section>
+
+    <section class="vitals-widget" aria-label="Player status">
+      <div class="stamina-emblem" id="stamina-display" role="meter" aria-label="Stamina" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+        <svg viewBox="0 0 48 48" class="stamina-svg" aria-hidden="true"><defs><linearGradient id="fist-fill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7bd44d" stop-opacity=".2"/><stop offset=".6" stop-color="#7bd44d" stop-opacity=".6"/><stop offset="1" stop-color="#a5f36d" stop-opacity=".15"/></linearGradient></defs><circle class="stamina-track" cx="24" cy="24" r="22"/><circle id="stamina-ring" cx="24" cy="24" r="22" pathLength="100"/><path class="fist" d="m12 33-4-13q-1-6 4-6l5 1 2-3q2-2 5 0l2-6q1-3 4-1l3 3 1 8 5 4q3 3 1 7l-4 7-12 5q-8 3-12-6Z"/><g class="oxygen-mark"><use href="#oxygen" x="11" y="11" width="26" height="26"/></g></svg>
+      </div>
+      <div class="vitals-separator"></div>
+      <div class="vitals-bars">
+        <div class="primary-vitals">
+          <div class="stat health" id="health-display" role="meter" aria-label="Health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85"><span class="stat-fill" id="health-fill"></span><span class="stat-content"><svg><use href="#heart"/></svg><span>HEALTH</span></span></div>
+          <div class="stat armor" id="armor-display" role="meter" aria-label="Armor" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75"><span class="stat-fill" id="armor-fill"></span><span class="stat-content"><svg><use href="#shield"/></svg><span>ARMOR</span></span></div>
+        </div>
+        <div class="needs-row">
+          <div class="need" id="hunger-display" role="meter" aria-label="Hunger" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"><div class="need-track"><i id="hunger-fill"></i></div><svg><use href="#burger"/></svg></div>
+          <div class="need" id="thirst-display" role="meter" aria-label="Thirst" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90"><div class="need-track"><i id="thirst-fill"></i></div><svg><use href="#drink"/></svg></div>
+        </div>
+      </div>
+      <div class="status-orbs">
+        <div class="status-orb voice" id="voice-display" aria-label="Voice: normal"><svg><use href="#voice"/></svg><span class="voice-range" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        <div class="status-orb stress" id="stress-display" role="meter" aria-label="Stress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="22"><svg class="orb-ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" pathLength="100" id="stress-ring"/></svg><svg class="orb-icon"><use href="#brain"/></svg></div>
+      </div>
+    </section>
+
+    <section class="vehicle-widget" id="vehicle-widget" aria-label="Vehicle instruments">
+      <div class="speed-dial">
+        <svg class="dial-art" viewBox="0 0 152 152" aria-hidden="true"><circle cx="76" cy="76" r="62" fill="#0e1118"/><path id="dial-inner" fill="none" stroke="#57595b" stroke-width="1"/><g id="rpm-ticks"></g></svg>
+        <div class="gear"><span id="gear">R</span><small>GEAR</small></div>
+        <div class="speed" id="speed" aria-label="0 miles per hour"><span class="muted">00</span><span>0</span></div>
+        <div class="speed-unit" id="speed-unit">MPH</div>
+      </div>
+      <svg class="fuel-dial" viewBox="0 0 78 150" aria-hidden="true"><path d="M43 9Q87 74 43 139" fill="none" stroke="#464849" stroke-width="1.3"/><path id="fuel-track" fill="none" stroke="#414348" stroke-width="7"/><path id="fuel-level" fill="none" stroke="#f8fafc" stroke-width="7" pathLength="100"/><path d="m10 22-6-8 5-4 6 7" stroke="#868991" fill="none"/><use href="#fuel" x="40" y="69" width="15" height="15"/></svg>
+      <div class="vehicle-lights"><div class="indicator" id="lights-display" aria-label="Headlights off"><svg><use href="#lights"/></svg></div><div class="indicator warning" id="seatbelt-display" aria-label="Seatbelt unfastened"><svg><use href="#seatbelt"/></svg></div><div class="indicator" id="locked-display" aria-label="Vehicle unlocked"><svg><use href="#lock"/></svg></div></div>
+    </section>
+    <span class="version">2.0.0 · VCORE</span>
+  </main>
+
+  <div class="dev-ui" id="dev-ui">
+    <button class="dev-toggle" id="dev-toggle" aria-expanded="false" aria-controls="dev-panel">Show Dev Controls</button>
+    <aside class="dev-panel" id="dev-panel" hidden aria-label="HUD preview controls">
+      <div class="panel-heading"><div><span class="panel-kicker">VCORE / HUD</span><h1>Make it yours.</h1></div><button class="close-button" id="close-panel" aria-label="Close controls">×</button></div>
+      <p class="panel-description">Live preview. Every control updates the HUD.</p>
+      <div class="presets" aria-label="Preview presets"><button data-preset="reference" class="selected">Reference</button><button data-preset="drive">City drive</button><button data-preset="foot">On foot</button></div>
+      <form id="controls" autocomplete="off">
+        <fieldset><legend>Player</legend><div id="player-sliders"></div><div class="toggle-row"><label><input type="checkbox" data-field="talking"> Talking</label><label><input type="checkbox" data-field="diving"> Underwater</label></div></fieldset>
+        <fieldset><legend>Vehicle <label class="legend-toggle"><input type="checkbox" data-field="inVehicle" checked> Show</label></legend><div id="vehicle-sliders"></div><div class="field-row"><label>Units<select data-field="unit"><option value="MPH">MPH</option><option value="KMH">KM/H</option></select></label><label>Gear<select data-field="gear"><option>R</option><option>N</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label></div><div class="toggle-row vehicle-toggles"><label><input type="checkbox" data-field="seatbelt"> Seatbelt</label><label><input type="checkbox" data-field="lights"> Lights</label><label><input type="checkbox" data-field="locked"> Locked</label></div><button type="button" class="drive-button" id="simulate"><span class="play-icon" aria-hidden="true">▶</span> Test drive</button></fieldset>
+        <fieldset><legend>Location</legend><div id="location-sliders"></div><div class="field-row"><label>Area<input type="text" maxlength="40" data-field="zone" value="LA PUERTA"></label><label>Street<input type="text" maxlength="60" data-field="street" value="ALTA ST"></label></div></fieldset>
+        <button type="button" id="reset" class="reset-button">Reset to reference</button>
+      </form>
+      <div class="panel-footer"><span class="connection-dot"></span> Browser preview <span>H to toggle · Esc to close</span></div>
+    </aside>
+  </div>
+  <script src="state.js"></script><script src="preferences.js"></script><script src="media.js"></script>
+  <script src="boombox-player.js"></script><script src="speech.js"></script><script src="bridge.js"></script><script src="app.js"></script><script src="dashboard.js"></script>
+  <script src="identity-foundation.js"></script>
+  <script src="foundation.js"></script>
+  <script src="settings-glass.js"></script>
+  <script src="instruments.js"></script>
+  <script src="standalone-widgets.js"></script>
+  <script src="element-editor.js"></script>
+  <script src="widget-controls.js"></script>
+  <script src="audio-widget.js"></script>
+</body></html>

@@ -1,0 +1,106 @@
+#hud [hidden] {
+  display: none !important;
+}
+html[data-identity-shape="rounded"] #identity-widget {
+  --identity-radius: 13px;
+  --identity-inner-radius: 10px;
+}
+html[data-identity-shape="square"] #identity-widget {
+  --identity-radius: 3px;
+  --identity-inner-radius: 3px;
+}
+html[data-identity-shape="rounded"] #identity-widget .foundation-brand-pill,
+html[data-identity-shape="rounded"] #identity-widget .name-chip,
+html[data-identity-shape="rounded"] #identity-widget .date-chip,
+html[data-identity-shape="square"] #identity-widget .foundation-brand-pill,
+html[data-identity-shape="square"] #identity-widget .name-chip,
+html[data-identity-shape="square"] #identity-widget .date-chip {
+  border-radius: var(--identity-radius);
+}
+html[data-identity-shape="rounded"] #identity-widget .id-chip,
+html[data-identity-shape="rounded"] #identity-widget .foundation-brand-mark,
+html[data-identity-shape="square"] #identity-widget .id-chip,
+html[data-identity-shape="square"] #identity-widget .foundation-brand-mark {
+  border-radius: var(--identity-inner-radius);
+}
+html[data-money-shape="rounded"] #identity-widget .money {
+  border-radius: 13px;
+}
+html[data-money-shape="square"] #identity-widget .money {
+  border-radius: 3px;
+}
+html[data-shortcut-shape="rounded"] #shortcut-widget > button:not(.move-handle) {
+  border-radius: 14px;
+}
+html[data-shortcut-shape="square"] #shortcut-widget > button:not(.move-handle) {
+  border-radius: 3px;
+}
+html[data-status-style="bars"] #ring-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 14px;
+  width: 430px;
+  height: 100px;
+  padding: 10px 82px 10px 12px;
+  align-content: center;
+}
+html[data-status-style="bars"] #ring-status .ring-stat {
+  width: auto;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+}
+html[data-status-style="bars"] #ring-status .ring-circle {
+  width: 20px;
+  height: 20px;
+}
+html[data-status-style="bars"] #ring-status .ring-circle svg {
+  inset: 2px;
+  width: 16px;
+  height: 16px;
+}
+html[data-status-style="bars"] #ring-status .ring-voice {
+  left: 380px;
+  right: auto;
+  top: 26px;
+  bottom: auto;
+}
+#component-voice {
+  position: absolute;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+  pointer-events: auto;
+}
+#component-voice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.soft-glass #component-voice {
+  backdrop-filter: blur(16px);
+}
+#component-voice.talking {
+  box-shadow: 0 0 14px #a6efb12b;
+}
+#component-voice.talking svg {
+  color: #a6efb1;
+}
+html[data-theme="light"] #component-voice svg {
+  color: #30424b;
+}
+html[data-layout="rectangle"]:not(.map-status-linked) .foundation-map {
+  border-radius: 0 0 20px 20px;
+}
+html[data-layout="rectangle"]:not(.map-status-linked).fivem .foundation-map {
+  border-radius: 0;
+}
+html[data-layout="circle"]:not(.map-status-linked) .radar-bezel {
+  box-shadow: 0 0 0 1px #ffffff2b, 0 6px 18px #0002;
+}
+html.map-status-linked.layout-editing #ring-status > .move-handle {
+  display: none !important;
+}
